@@ -19,6 +19,8 @@ deluge_password = ""
 
 def setup(hass, config):
 
+    _LOGGER.debug(config)
+
     conf = config[DOMAIN]
     
     if conf[CONF_DELUGE_URL] is not None:
