@@ -14,10 +14,10 @@ CONF_DELUGE_PORT = "port"
 default_deluge_port = 58846
 
 CONF_DELUGE_USERNAME = "username"
-default_deluge_username = None
+default_deluge_username = "deluge"
 
 CONF_DELUGE_PASSWORD = "password"
-default_deluge_password = None
+default_deluge_password = "deluge"
 
 CONFIG_SCHEMA = vol.Schema({
     DOMAIN: vol.Schema({
