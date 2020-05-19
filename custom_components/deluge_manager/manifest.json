@@ -1,6 +1,6 @@
 {
     "domain": "deluge_manager",
-    "name": "Deluge",
+    "name": "Deluge Manager",
     "requirements": [
         "deluge-client==1.9.0"
     ],

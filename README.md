@@ -3,5 +3,8 @@
 # Config
 
 ```yaml
-deluge_url: 192.168.0.1
+url: 127.0.0.1
+port: 58846
+username:
+password:
 ```

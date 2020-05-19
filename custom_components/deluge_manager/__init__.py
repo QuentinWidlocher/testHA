@@ -5,16 +5,16 @@ from homeassistant.exceptions import PlatformNotReady
 
 _LOGGER = logging.getLogger(__name__)
 
-CONF_DELUGE_URL = "deluge_url"
+CONF_DELUGE_URL = "url"
 deluge_url = "127.0.0.1"
 
-CONF_DELUGE_PORT = "deluge_port"
-deluge_port = ""
+CONF_DELUGE_PORT = "port"
+deluge_port = "58846"
 
-CONF_DELUGE_USERNAME = "deluge_username"
+CONF_DELUGE_USERNAME = "username"
 deluge_username = ""
 
-CONF_DELUGE_PASSWORD = "deluge_password"
+CONF_DELUGE_PASSWORD = "password"
 deluge_password = ""
 
 def setup(hass, config):
