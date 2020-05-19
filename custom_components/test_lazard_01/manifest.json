@@ -1,13 +1,11 @@
 {
     "domain": "test_lazard_01",
     "name": "Test Lazard 01",
-    "requirements": [],
-    "dependencies": [
-        "webhook"
+    "requirements": [
+        "deluge-client==1.9.0"
     ],
     "codeowners": [
         "@QuentinWidlocher"
     ],
-    "config_flow": true,
-    "quality_scale": "platinum"
+    "config_flow": true
 }

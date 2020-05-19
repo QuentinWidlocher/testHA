@@ -8,7 +8,8 @@ deluge_url = "127.0.0.1"
 
 def setup(hass, config):
 
-    deluge_url = config[CONF_DELUGE_URL]
+    conf = config[DOMAIN]
+    deluge_url = conf[CONF_DELUGE_URL]
 
     def handle_get_torrents(call):
         _LOGGER.debug(f"Getting deluge status on {deluge_url}")
