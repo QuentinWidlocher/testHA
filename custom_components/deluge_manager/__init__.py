@@ -22,9 +22,9 @@ default_deluge_password = "deluge"
 CONFIG_SCHEMA = vol.Schema({
     DOMAIN: vol.Schema({
         vol.Optional(CONF_DELUGE_URL, default=default_deluge_url): cv.string,
-        vol.Optional(CONF_DELUGE_PORT, default=default_deluge_port): cv.positive_int,
-        vol.Optional(CONF_DELUGE_USERNAME, default=default_deluge_username): cv.string,
-        vol.Optional(CONF_DELUGE_PASSWORD, default=default_deluge_password): cv.string,
+        vol.Optional(CONF_DELUGE_PORT, default=default_deluge_port): cv.port,
+        vol.Optional(CONF_DELUGE_USERNAME, default="default_deluge_username"): cv.string,
+        vol.Optional(CONF_DELUGE_PASSWORD, default="default_deluge_password"): cv.string,
     }),
 }, extra=vol.ALLOW_EXTRA)
 
