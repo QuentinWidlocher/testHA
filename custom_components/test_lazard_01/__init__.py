@@ -1,12 +1,17 @@
+import logging
 from .const import DOMAIN
+
+_LOGGER = logging.getLogger(__name__)
+
+CONF_DELUGE_URL = "deluge_url"
+deluge_url = "127.0.0.1"
 
 def setup(hass, config):
 
-    def handle_get_torrents(call):
-        """Handle the service call."""
-        test = call.data.get("test", "")
+    deluge_url = config[CONF_DELUGE_URL]
 
-        hass.states.set("test_lazard_01.hello", test)
+    def handle_get_torrents(call):
+        _LOGGER.debug(f"Getting deluge status on {deluge_url}")
 
     hass.services.register(DOMAIN, "get_torrents", handle_get_torrents)
 

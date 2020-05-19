@@ -1,6 +1,2 @@
 get_torrents:
   description: Get a list of all torrents in deluge
-  fields:
-    test:
-      description: A test field
-      example: "oui"
