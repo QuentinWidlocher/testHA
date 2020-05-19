@@ -1,0 +1,13 @@
+{
+    "domain": "test_lazard_01",
+    "name": "Test Lazard 01",
+    "requirements": [],
+    "dependencies": [
+        "webhook"
+    ],
+    "codeowners": [
+        "@QuentinWidlocher"
+    ],
+    "config_flow": true,
+    "quality_scale": "platinum"
+}
