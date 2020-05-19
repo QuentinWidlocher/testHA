@@ -1,5 +1,13 @@
 from .const import DOMAIN
 
 def setup(hass, config):
-    hass.states.set("test_lazard_01.world", "Paulus")
+    
+    def handle_hello(call):
+        """Handle the service call."""
+        name = call.data.get("name", "World")
+
+        hass.states.set("test_lazard_01.hello", name)
+
+    hass.services.register(DOMAIN, "hello", handle_hello)
+
     return True
