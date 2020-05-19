@@ -1,6 +1,6 @@
 {
-    "domain": "test_lazard_01",
-    "name": "Test Lazard 01",
+    "domain": "deluge_manager",
+    "name": "Deluge",
     "requirements": [
         "deluge-client==1.9.0"
     ],

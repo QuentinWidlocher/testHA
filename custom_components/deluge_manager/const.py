@@ -1,0 +1,1 @@
+DOMAIN = "deluge_manager"
