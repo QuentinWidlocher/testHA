@@ -1,5 +1,7 @@
 import logging
 from .const import DOMAIN
+import voluptuous as vol
+import homeassistant.helpers.config_validation as cv
 from deluge_client import DelugeRPCClient
 from homeassistant.exceptions import PlatformNotReady
 
@@ -16,6 +18,15 @@ deluge_username = ""
 
 CONF_DELUGE_PASSWORD = "password"
 deluge_password = ""
+
+CONFIG_SCHEMA = vol.Schema({
+    DOMAIN: vol.Schema({
+        vol.Optional(CONF_DELUGE_URL, default=deluge_url): cv.string,
+        vol.Optional(CONF_DELUGE_PORT, default=deluge_port): cv.string,
+        vol.Optional(CONF_DELUGE_USERNAME, default=deluge_username): cv.string,
+        vol.Optional(CONF_DELUGE_PASSWORD, default=deluge_password): cv.string,
+    }),
+}, extra=vol.ALLOW_EXTRA)
 
 def setup(hass, config):
 
