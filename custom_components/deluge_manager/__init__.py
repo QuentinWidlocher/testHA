@@ -23,16 +23,16 @@ def setup(hass, config):
 
     conf = config[DOMAIN]
     
-    if conf[CONF_DELUGE_URL] is not None:
+    if CONF_DELUGE_URL in conf:
         deluge_url = conf[CONF_DELUGE_URL]
     
-    if conf[CONF_DELUGE_PORT] is not None:
+    if CONF_DELUGE_PORT in conf:
         deluge_port = conf[CONF_DELUGE_PORT]
 
-    if conf[CONF_DELUGE_USERNAME] is not None:
+    if CONF_DELUGE_USERNAME in conf:
         deluge_username = conf[CONF_DELUGE_USERNAME]
 
-    if conf[CONF_DELUGE_PASSWORD] is not None:
+    if CONF_DELUGE_PASSWORD in conf:
         deluge_password = conf[CONF_DELUGE_PASSWORD]
 
     client = DelugeRPCClient(deluge_url, deluge_port,
