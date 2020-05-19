@@ -2,5 +2,5 @@
 from homeassistant.helpers import config_entry_flow
 from .const import DOMAIN
 
-config_entry_flow.register_webhook_flow(DOMAIN, "Webhook", {
-                                        "docs_url": "https://github.com/QuentinWidlocher/testHA/blob/master/README.md"})
+# config_entry_flow.register_webhook_flow(DOMAIN, "Webhook", {
+#                                         "docs_url": "https://github.com/QuentinWidlocher/testHA/blob/master/README.md"})
