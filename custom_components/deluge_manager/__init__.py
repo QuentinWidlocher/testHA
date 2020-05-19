@@ -44,7 +44,7 @@ def setup(hass, conf):
         for id, torrent in torrents.items():
             _LOGGER.debug(torrent['name'])
 
-    def handle_connect():
+    def handle_connect(call):
         global client
         global config
         conf = config
