@@ -44,8 +44,8 @@ def setup(hass, conf):
         names = []
 
         for id, torrent in torrents.items():
-            _LOGGER.debug(torrent['name'])
-            names.append(torrent['name'])
+            _LOGGER.debug(torrent)
+            names.append(torrent)
 
         hass.states.set(f"{DOMAIN}.torrents", names)
 
