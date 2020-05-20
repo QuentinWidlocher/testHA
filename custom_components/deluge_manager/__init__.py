@@ -70,7 +70,7 @@ def handle_connect(call):
         client.connect()
     except ConnectionRefusedError:
         _LOGGER.error("Connection to Deluge Daemon failed")
-    raise PlatformNotReady
+        raise PlatformNotReady
 
 def handle_get_torrents(call):
     global hass
