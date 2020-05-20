@@ -13,7 +13,7 @@ SCAN_INTERVAL = timedelta(seconds=5)
 
 torrent_state_to_create = [
     "Seeding",
-    "Downloading"
+    "Downloading",
     "Active",
     "Inactive"
 ]
