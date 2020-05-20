@@ -18,14 +18,6 @@ with DelugeRPCClient("127.0.0.1", 58846, "deluge", "deluge") as client:
         print('Unable to connect')
         exit()
 
-    torrents = client.core.get_torrents_status({}, [])
-    names = []
+    torrents = client.core.get_torrents_status({'state': 'Downloading'}, ['name'])
 
-    for torrent in torrents.values():
-        print(torrent[b'name'])
-        for key, value in torrent.items():
-            if key.decode('UTF-8') in keys:
-                print(key.decode('UTF-8'), value)
-        print()
-
-    # print(names)
+    print(len(torrents.keys()))
