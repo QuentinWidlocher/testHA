@@ -60,14 +60,17 @@ class BaseTorrentSensor(Entity):
 
     def __init__(self):
         """Initialize the sensor."""
+        _LOGGER.info(self.name, "init")
         self._state = 0
 
     @property
     def name(self):
         """Return the name of the sensor."""
+        _LOGGER.info(self.name, "accessing name")
         return self._name
 
     @property
     def state(self):
         """Return the state of the sensor."""
+        _LOGGER.info(self.name, "accessing state")
         return self._state
