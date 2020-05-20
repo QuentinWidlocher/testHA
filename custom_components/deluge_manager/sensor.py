@@ -66,7 +66,6 @@ class BaseTorrentSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        _LOGGER.info(self.name, "accessing name")
         return self._name
 
     @property
