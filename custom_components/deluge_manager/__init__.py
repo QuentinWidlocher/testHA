@@ -33,7 +33,6 @@ config = None
 
 def setup(hass, conf):
 
-    global client
     global config
 
     config = conf[DOMAIN]
@@ -44,8 +43,13 @@ def setup(hass, conf):
     return True
 
 def handle_connect(hass, call):
+    _LOGGER.debug("handle_connect")
+    
+    _LOGGER.debug(hass is None)
+    _LOGGER.debug(call is None)
     global client
     global config
+
     conf = config
 
     deluge_url = get_value_or_default(CONF_DELUGE_URL, conf, call.data)
