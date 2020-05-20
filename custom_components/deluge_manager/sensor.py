@@ -33,17 +33,24 @@ def update(self, state):
     global client
     global auth
 
+    _LOGGER.info(self.name, "update")
+
     if client is None or auth is None:
+        _LOGGER.info(self.name, "no client or auth, abort")
         return
 
     if not client.connected:
+        _LOGGER.info(self.name, "client not connected")
         client = connect(auth)
 
     if not client.connected:
+        _LOGGER.info(self.name, "client still not connected, abort")
         return
 
     torrents = client.core.get_torrents_status(
         {'state': state}, ['name'])
+
+    _LOGGER.info(self.name, len(torrents.values()))
 
     self._state = len(torrents.values())
 
@@ -63,6 +70,4 @@ class BaseTorrentSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        _LOGGER.info("update")
-        _LOGGER.debug("update")
         return self._state
