@@ -30,21 +30,26 @@ CONFIG_SCHEMA = vol.Schema({
 
 client = None
 config = None
+hass = None
 
-def setup(hass, conf):
+def setup(hass_inst, conf):
 
     global config
+    global hass
 
     config = conf[DOMAIN]
+    hass = hass_inst
 
-    hass.services.register(DOMAIN, "get_torrents", lambda call: handle_get_torrents(hass, call))
-    hass.services.register(DOMAIN, "connect", lambda call: handle_connect(hass, call))
+    hass.services.register(DOMAIN, "get_torrents", handle_get_torrents)
+    hass.services.register(DOMAIN, "connect", handle_connect)
 
     return True
 
-def handle_connect(hass, call):
+def handle_connect(call):
+    global hass
+
     _LOGGER.debug("handle_connect")
-    
+
     _LOGGER.debug(hass is None)
     _LOGGER.debug(call is None)
     global client
@@ -57,6 +62,8 @@ def handle_connect(hass, call):
     deluge_username = get_value_or_default(CONF_DELUGE_USERNAME, conf, call.data)
     deluge_password = get_value_or_default(CONF_DELUGE_PASSWORD, conf, call.data)
 
+    _LOGGER.debug(deluge_url)
+
     client = DelugeRPCClient(deluge_url, deluge_port, deluge_username, deluge_password)
 
     try:
@@ -65,7 +72,9 @@ def handle_connect(hass, call):
         _LOGGER.error("Connection to Deluge Daemon failed")
     raise PlatformNotReady
 
-def handle_get_torrents(hass, all):
+def handle_get_torrents(call):
+    global hass
+
     _LOGGER.debug(f"Getting deluge status...")
     torrents = client.core.get_torrents_status({}, ['name'])
     names = []
