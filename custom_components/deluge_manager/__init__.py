@@ -38,52 +38,44 @@ def setup(hass, conf):
 
     config = conf[DOMAIN]
 
-    def handle_get_torrents(call):
-        _LOGGER.debug(f"Getting deluge status...")
-        torrents = client.core.get_torrents_status({}, ['name'])
-        names = []
-
-        for id, torrent in torrents.items():
-            _LOGGER.debug(torrent)
-            names.append(torrent)
-
-        hass.states.set(f"{DOMAIN}.torrents", names)
-
-    def handle_connect(call):
-        global client
-        global config
-        conf = config
-
-        if CONF_DELUGE_URL in conf:
-            deluge_url = conf[CONF_DELUGE_URL]
-        else:
-            deluge_url = default_deluge_url
-
-        if CONF_DELUGE_PORT in conf:
-            deluge_port = conf[CONF_DELUGE_PORT]
-        else:
-            deluge_port = default_deluge_port
-
-        if CONF_DELUGE_USERNAME in conf:
-            deluge_username = conf[CONF_DELUGE_USERNAME]
-        else:
-            deluge_username = default_deluge_username
-
-        if CONF_DELUGE_PASSWORD in conf:
-            deluge_password = conf[CONF_DELUGE_PASSWORD]
-        else:
-            deluge_password = default_deluge_password
-
-        client = DelugeRPCClient(deluge_url, deluge_port,
-                                deluge_username, deluge_password)
-
-        try:
-            client.connect()
-        except ConnectionRefusedError:
-            _LOGGER.error("Connection to Deluge Daemon failed")
-            raise PlatformNotReady
-
-    hass.services.register(DOMAIN, "get_torrents", handle_get_torrents)
-    hass.services.register(DOMAIN, "connect", handle_connect)
+    hass.services.register(DOMAIN, "get_torrents", lambda call: handle_get_torrents(hass, call))
+    hass.services.register(DOMAIN, "connect", lambda call: handle_connect(hass, call))
 
     return True
+
+def handle_connect(hass, call):
+    global client
+    global config
+    conf = config
+
+    deluge_url = get_value_or_default(CONF_DELUGE_URL, conf, call.data)
+    deluge_port = get_value_or_default(CONF_DELUGE_PORT, conf, call.data)
+    deluge_username = get_value_or_default(CONF_DELUGE_USERNAME, conf, call.data)
+    deluge_password = get_value_or_default(CONF_DELUGE_PASSWORD, conf, call.data)
+
+    client = DelugeRPCClient(deluge_url, deluge_port, deluge_username, deluge_password)
+
+    try:
+        client.connect()
+    except ConnectionRefusedError:
+        _LOGGER.error("Connection to Deluge Daemon failed")
+    raise PlatformNotReady
+
+def handle_get_torrents(hass, all):
+    _LOGGER.debug(f"Getting deluge status...")
+    torrents = client.core.get_torrents_status({}, ['name'])
+    names = []
+
+    for id, torrent in torrents.items():
+        _LOGGER.debug(torrent)
+        names.append(torrent)
+
+    hass.states.set(f"{DOMAIN}.torrents", names)
+
+def get_value_or_default(key, conf, params):
+    if key in params:
+        return conf[key]
+    elif key in conf:
+        return params.get(key)
+    else:
+        return default_deluge_url
