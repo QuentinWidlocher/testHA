@@ -18,10 +18,12 @@ CONFIG_SCHEMA = vol.Schema({
 }, extra=vol.ALLOW_EXTRA)
 
 client = None
+auth = None
 
 def setup(hass, conf):
 
     global client
+    global auth
 
     config = conf[DOMAIN]
 

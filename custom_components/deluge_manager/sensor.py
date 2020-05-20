@@ -33,6 +33,10 @@ class TorrentList(Entity):
         """
 
         global client
+        global auth
+
+        if client is None or auth is None:
+            return
 
         if not client.connected:
             client = connect(auth)
