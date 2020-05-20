@@ -31,6 +31,7 @@ CONFIG_SCHEMA = vol.Schema({
 client = None
 config = None
 hass = None
+auth = None
 
 def setup(hass_inst, conf):
 
@@ -40,34 +41,27 @@ def setup(hass_inst, conf):
     config = conf[DOMAIN]
     hass = hass_inst
 
+    setup_auth(conf, {})
+
     hass.services.register(DOMAIN, "get_torrents", handle_get_torrents)
     hass.services.register(DOMAIN, "connect", handle_connect)
 
     return True
 
 def handle_connect(call):
-    global hass
-
     _LOGGER.debug("handle_connect")
 
-    _LOGGER.debug(hass is None)
-    _LOGGER.debug(call is None)
+    global hass
     global client
     global config
+    global auth
 
     conf = config
 
-    deluge_url = get_value_or_default(CONF_DELUGE_URL, conf, call.data)
-    deluge_port = get_value_or_default(CONF_DELUGE_PORT, conf, call.data)
-    deluge_username = get_value_or_default(CONF_DELUGE_USERNAME, conf, call.data)
-    deluge_password = get_value_or_default(CONF_DELUGE_PASSWORD, conf, call.data)
-
-    _LOGGER.debug(deluge_url)
-
-    client = DelugeRPCClient(deluge_url, deluge_port, deluge_username, deluge_password)
+    setup_auth(conf, call.data)
 
     try:
-        client.connect()
+        connect()
     except ConnectionRefusedError:
         _LOGGER.error("Connection to Deluge Daemon failed")
         raise PlatformNotReady
@@ -84,6 +78,26 @@ def handle_get_torrents(call):
         names.append(torrent)
 
     hass.states.set(f"{DOMAIN}.torrents", names)
+
+
+def connect():
+    global client
+    global auth
+
+    client = DelugeRPCClient(auth['url'], auth['port'],
+                             auth['username'], auth['password'])
+
+    client.connect();
+
+
+def setup_auth(conf, params):
+    global auth
+    auth = {
+        'url': get_value_or_default(CONF_DELUGE_URL, conf, params),
+        'port': get_value_or_default(CONF_DELUGE_PORT, conf, params),
+        'username': get_value_or_default(CONF_DELUGE_USERNAME, conf, params),
+        'password': get_value_or_default(CONF_DELUGE_PASSWORD, conf, params),
+    }
 
 def get_value_or_default(key, conf, params):
     if key in params:
