@@ -1,8 +1,11 @@
+import logging
 from homeassistant.helpers.entity import Entity
 from deluge_client.client import DelugeRPCClient
 from .__init__ import connect, auth, client
 from datetime import timedelta
 from .const import TORRENT_INFO_KEYS
+
+_LOGGER = logging.getLogger(__name__)
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
@@ -60,4 +63,6 @@ class BaseTorrentSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
+        _LOGGER.info("update")
+        _LOGGER.debug("update")
         return self._state
