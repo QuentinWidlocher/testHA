@@ -1,10 +1,13 @@
 from homeassistant.helpers.entity import Entity
 from deluge_client.client import DelugeRPCClient
 from .__init__ import connect, auth, client
+from datetime import timedelta
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
     add_entities([TorrentList()])
+
+SCAN_INTERVAL = timedelta(seconds=5)
 
 keys = [
     'name',
@@ -21,7 +24,7 @@ class TorrentList(Entity):
 
     def __init__(self):
         """Initialize the sensor."""
-        self._state = None
+        self._state = {}
 
     @property
     def name(self):
@@ -43,6 +46,9 @@ class TorrentList(Entity):
 
         if not client.connected:
             connect()
+
+        if not client.connected:
+            return
                 
         torrents = client.core.get_torrents_status({}, keys)
             
