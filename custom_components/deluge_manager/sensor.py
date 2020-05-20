@@ -48,7 +48,7 @@ class BaseTorrentSensor(Entity):
 
     _name = ""
 
-    def __init__(self, name):
+    def __init__(self):
         """Initialize the sensor."""
         self._state = 0
 
