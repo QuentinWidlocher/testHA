@@ -38,5 +38,5 @@ torrent_state_to_create = [
     "Inactive"
 ]
 
-tests = [new_class(state)() for state in torrent_state_to_create]
-print(tests)
+test = new_class("Seeding")
+test().update()
