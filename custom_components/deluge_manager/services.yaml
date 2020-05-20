@@ -1,4 +1,17 @@
 connect:
   description: Connect to Deluge Daemon
+  fields:
+    url:
+      description: URL of the deluge host
+      example: 127.0.0.1
+    port:
+      description: Post of the deluge DAEMON
+      example: 58846
+    username:
+      description: Username for deluge
+      example: deluge
+    password:
+      description: Password for deluge
+      example: deluge
 get_torrents:
   description: Get a list of all torrents in deluge
