@@ -7,8 +7,7 @@ from .const import TORRENT_INFO_KEYS
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
     # One class instance for each torrent state
-    # add_entities([new_class(state)() for state in torrent_state_to_create])
-    add_entities([new_class("Downloading")()])
+    add_entities([new_class(state)() for state in torrent_state_to_create])
 
 SCAN_INTERVAL = timedelta(seconds=5)
 
