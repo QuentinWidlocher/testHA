@@ -1,2 +1,4 @@
+connect:
+  description: Connect to Deluge Daemon
 get_torrents:
   description: Get a list of all torrents in deluge

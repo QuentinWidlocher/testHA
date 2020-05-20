@@ -41,8 +41,13 @@ def setup(hass, conf):
     def handle_get_torrents(call):
         _LOGGER.debug(f"Getting deluge status...")
         torrents = client.core.get_torrents_status({}, ['name'])
+        names = []
+
         for id, torrent in torrents.items():
             _LOGGER.debug(torrent['name'])
+            names.append(torrent['name'])
+
+        hass.states.set(f"{DOMAIN}.torrents", names)
 
     def handle_connect(call):
         global client
